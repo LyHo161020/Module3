@@ -57,21 +57,16 @@
                 <c:forEach var="transferInfo" items='${listTransferInfo}'>
                     <tr>
                         <td>${transferInfo.getId()}</td>
-                        <td>${transferInfo.getSendId}</td>
-                        <td>${transferInfo.getSendName}</td>
-                        <td>${transferInfo.getRepId}</td>
-                        <td>${transferInfo.getRepName}</td>
-                        <td>${transferInfo.getTransactionAmount}</td>
-                        <td>${transferInfo.getFees}</td>
-                        <td>${transferInfo.getFeesAmount}</td>
+                        <td>${transferInfo.getSendId()}</td>
+                        <td>${transferInfo.getSendName()}</td>
+                        <td>${transferInfo.getRepId()}</td>
+                        <td>${transferInfo.getRepName()}</td>
+                        <td>${transferInfo.getTransactionAmount()}</td>
+                        <td>${transferInfo.getFees()}</td>
+                        <td>${transferInfo.getFeesAmount()}</td>
                     </tr>
                 </c:forEach>
             </tbody>
-
-            <%  long totalFeesAmount = 0;%>
-            <c:forEach var="transfer" items='${listTransferInfo}'>
-                ${totalFeesAmount} = ${totalFeesAmount} + ${transfer.getFeesAmount};
-            </c:forEach>
             <tfoot>
             <tr>
                 <td colspan="5"></td>

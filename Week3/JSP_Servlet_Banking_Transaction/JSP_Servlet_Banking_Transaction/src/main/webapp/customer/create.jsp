@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -14,23 +15,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="/assets/style.css">
-    <style>
-        .success {
-            color:green;
-            font-size: 20px;
-            font-family: Arial;
-        }
-
-        .error {
-            color: red;
-            font-size: 20px;
-            font-family: Arial;
-        }
-
-        .notification {
-            margin-left: 450px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -80,15 +64,30 @@
                 </div>
             </fieldset>
         </form>
-        <p class="notification">
-            <c:if test='${requestScope["success"] != null}'>
-                <span class="success">${requestScope["success"]}</span>
-            </c:if>
+<%--        <p class="notification">--%>
+<%--            <c:if test='${requestScope["success"] != null}'>--%>
+<%--                <span class="success">${requestScope["success"]}</span>--%>
+<%--            </c:if>--%>
 
-            <c:if test='${requestScope["error"] != null}'>
-                <span class="error">${requestScope["error"]}</span>
-            </c:if>
-        </p>
+<%--            <c:if test='${requestScope["error"] != null}'>--%>
+<%--                <span class="error">${requestScope["error"]}</span>--%>
+<%--            </c:if>--%>
+<%--        </p>--%>
+
+        <c:choose>
+            <c:when test = "${requestScope['message'] == null}" >
+            </c:when>
+            <c:when test='${requestScope["message"] == "New customer was created"}'>
+                <%@ include file="/alert/success.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@ include file="/alert/warning.jsp"%>
+            </c:otherwise>
+        </c:choose>
+
+        <c:if test='${requestScope["errors"] != null}'>
+            <%@ include file="/alert/danger.jsp"%>
+        </c:if>
     </div>
 </body>
 </html>

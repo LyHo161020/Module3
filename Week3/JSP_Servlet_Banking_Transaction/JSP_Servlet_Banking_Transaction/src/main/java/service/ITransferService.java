@@ -20,4 +20,6 @@ public interface ITransferService {
     boolean update(Transfer transfer) throws SQLException;
 
     List<TransferInfo> selectAllTransfers();
+
+    int sumFeesAmount();
 }

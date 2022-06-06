@@ -5,6 +5,7 @@
   Time: 10:45 SA
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -50,7 +51,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="amount" class="form-label">Transaction Amount ($)</label>
-                        <input type="text" name="amount" id="amount" class="form-control">
+                        <input type="number" name="amount" id="amount" class="form-control">
                     </div>
                 </div>
 
@@ -64,11 +65,27 @@
             </fieldset>
         </form>
 
-        <p class="notification">
-            <c:if test='${requestScope["message"] != null}'>
-                <span class="success">${requestScope["message"]}</span>
-            </c:if>
-        </p>
+<%--        <p class="notification">--%>
+<%--            <c:if test='${requestScope["message"] != null}'>--%>
+<%--                <span class="success">${requestScope["message"]}</span>--%>
+<%--            </c:if>--%>
+<%--        </p>--%>
+
+        <c:choose>
+            <c:when test = "${requestScope['message'] == null}" >
+            </c:when>
+            <c:when test='${requestScope["message"] == "Rút tiền thành công!"}'>
+                <%@ include file="/alert/success.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@ include file="/alert/warning.jsp"%>
+            </c:otherwise>
+        </c:choose>
+
+
+        <c:forEach var="error" items="${errors}">
+            <%@ include file="/alert/danger.jsp"%>
+        </c:forEach>
     </div>
 </body>
 </html>

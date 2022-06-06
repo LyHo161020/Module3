@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-sm-3">
                         <label for="amount" class="form-label">Transaction Amount ($)</label>
-                        <input type="text" name="amount" id="amount" class="form-control">
+                        <input type="number" name="amount" id="amount" class="form-control">
                     </div>
                     <div class="col-sm-3">
                         <label for="fees" class="form-label">Fees (%)</label>
@@ -88,11 +88,21 @@
             </fieldset>
         </form>
 
-        <p class="notification">
-            <c:if test='${requestScope["message"] != null}'>
-                <span class="success">${requestScope["message"]}</span>
-            </c:if>
-        </p>
+        <c:choose>
+            <c:when test = "${requestScope['message'] == null}" >
+            </c:when>
+            <c:when test='${requestScope["message"] == "Chuyển tiền thành công!"}'>
+                <%@ include file="/alert/success.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@ include file="/alert/warning.jsp"%>
+            </c:otherwise>
+        </c:choose>
+
+
+        <c:if test='${requestScope["errors"] != null}'>
+            <%@ include file="/alert/danger.jsp"%>
+        </c:if>
     </div>
 
     <script>

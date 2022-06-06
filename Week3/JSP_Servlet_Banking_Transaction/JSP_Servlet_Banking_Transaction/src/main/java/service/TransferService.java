@@ -33,7 +33,7 @@ public class TransferService implements ITransferService{
             "JOIN customers send ON trans.sender_id = send.id;";
     private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
     private static final String UPDATE_CUSTOMERS_SQL = "UPDATE customers SET full_name = ?,email= ?, phone =?, address =? WHERE id = ?;";
-
+    private static final String CALL_SUM_FEES_AMOUNT = "{call sp_sum_fees_amount(?)}";
     @Override
     public String insert(Transfer transfer) throws SQLException {
         try{
@@ -123,5 +123,20 @@ public class TransferService implements ITransferService{
             customerService.printSQLException(e);
         }
         return transferInfos;
+    }
+
+    @Override
+    public int sumFeesAmount() {
+        try{
+            Connection connection = customerService.getConnection();
+            CallableStatement callableStatement = connection.prepareCall(CALL_SUM_FEES_AMOUNT);
+            callableStatement.registerOutParameter(1, Types.INTEGER);
+            callableStatement.execute();
+            int totalFeesAmount = callableStatement.getInt(1);
+            return totalFeesAmount;
+        } catch (SQLException e) {
+            customerService.printSQLException(e);
+        }
+        return 0;
     }
 }

@@ -76,15 +76,20 @@
             </fieldset>
         </form>
 
-        <p class="notification">
-            <c:if test='${requestScope["success"] != null}'>
-                <span class="success">${requestScope["success"]}</span>
-            </c:if>
+        <c:choose>
+            <c:when test = "${requestScope['message'] == null}" >
+            </c:when>
+            <c:when test='${requestScope["message"] == "Thông tin khách hàng đã được cập nhật thành công!"}'>
+                <%@ include file="/alert/success.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@ include file="/alert/warning.jsp"%>
+            </c:otherwise>
+        </c:choose>
 
-            <c:if test='${requestScope["error"] != null}'>
-                <span class="error">${requestScope["error"]}</span>
-            </c:if>
-        </p>
+        <c:if test='${requestScope["errors"] != null}'>
+            <%@ include file="/alert/danger.jsp"%>
+        </c:if>
     </div>
 </body>
 </html>
